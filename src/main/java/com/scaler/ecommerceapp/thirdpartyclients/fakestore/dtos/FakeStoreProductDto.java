@@ -1,4 +1,4 @@
-package com.scaler.ecommerceapp.dtos;
+package com.scaler.ecommerceapp.thirdpartyclients.fakestore.dtos;
 
 import com.scaler.ecommerceapp.models.Rating;
 import lombok.Getter;
