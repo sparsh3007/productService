@@ -6,19 +6,37 @@ import com.scaler.ecommerceapp.InheritanceExample.joined.Mentor;
 import com.scaler.ecommerceapp.InheritanceExample.joined.MentorRespository;
 import com.scaler.ecommerceapp.InheritanceExample.joined.Student;
 import com.scaler.ecommerceapp.InheritanceExample.joined.StudentRepository;
+import com.scaler.ecommerceapp.Repositories.CategoryRepository;
+import com.scaler.ecommerceapp.Repositories.PriceRespository;
+import com.scaler.ecommerceapp.Repositories.ProductRepository;
+import com.scaler.ecommerceapp.models.Category;
+import com.scaler.ecommerceapp.models.Price;
+import com.scaler.ecommerceapp.models.Product;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @SpringBootApplication
 public class EcommerceAppApplication implements CommandLineRunner {
     private MentorRespository mentorRepository;
     private StudentRepository studentRepository;
-    public EcommerceAppApplication(MentorRespository mentorRepository, StudentRepository studentRepository) {
+    private CategoryRepository categoryRepository;
+    private ProductRepository productRepository;
+    private PriceRespository priceRespository;
+    public EcommerceAppApplication(MentorRespository mentorRepository,
+                                   StudentRepository studentRepository,
+                                   CategoryRepository categoryRepository,
+                                   ProductRepository productRepository,
+                                   PriceRespository priceRespository) {
         this.studentRepository = studentRepository;
         this.mentorRepository = mentorRepository;
+        this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
+        this.priceRespository = priceRespository;
     }
 
     public static void main(String[] args) {
@@ -47,7 +65,7 @@ public class EcommerceAppApplication implements CommandLineRunner {
 
 //        List<User> users = userRepository.findAll();
 //        users.forEach(user2 -> System.out.println(user2.getName()));
-
+        /*
         Mentor mentor = new Mentor();
         mentor.setAvgRating(4.9f);
         mentor.setName("Saket Ghosh");
@@ -60,5 +78,36 @@ public class EcommerceAppApplication implements CommandLineRunner {
         student.setBatch("Oct2022");
         student.setPsp(90);
         studentRepository.save(student);
+         */
+
+        // Create a category and a product
+        Price price = new Price(10000, "INR");
+//        Price savedPrice = priceRespository.save(price);
+
+        Category category = new Category();
+        category.setName("Electronics");
+        Category savedCategory =categoryRepository.save(category);
+
+        Product product = new Product();
+        product.setTitle("iPhone 13");
+        product.setDescription("Apple iPhone 13");
+        product.setPrice(price);
+        product.setCategory(savedCategory);
+        product.setImage("https://www.apple.com/newsroom/images/product/iphone/standard/Apple_new-iphone13-pro-family_09142021_big.jpg.large.jpg");
+        productRepository.save(product);
+
+//        productRepository.deleteById(UUID.fromString("0c0c40e4-cb4a-4862-a337-c479872923f5"));
+
+//        // Fetch the category and print the products
+//        Optional<Category> categoryOptional = categoryRepository.findById(UUID.fromString("55ad9a5a-575b-4789-bd02-6ebb9c97a100"));
+//        if(categoryOptional.isPresent()){
+//            Category category1 = categoryOptional.get();
+//            List<Product> products = category1.getProducts();
+//            products.forEach(product1 -> System.out.println(product1.getTitle()));
+//            System.out.println("DEBUG");
+//        }
+//        else{
+//            System.out.println("Category not found");
+//        }
     }
 }
