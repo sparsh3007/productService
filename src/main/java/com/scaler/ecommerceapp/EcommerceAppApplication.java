@@ -2,19 +2,17 @@ package com.scaler.ecommerceapp;
 
 
 
-import com.scaler.ecommerceapp.InheritanceExample.joined.Mentor;
 import com.scaler.ecommerceapp.InheritanceExample.joined.MentorRespository;
-import com.scaler.ecommerceapp.InheritanceExample.joined.Student;
 import com.scaler.ecommerceapp.InheritanceExample.joined.StudentRepository;
 import com.scaler.ecommerceapp.Repositories.CategoryRepository;
 import com.scaler.ecommerceapp.Repositories.PriceRespository;
 import com.scaler.ecommerceapp.Repositories.ProductRepository;
 import com.scaler.ecommerceapp.models.Category;
-import com.scaler.ecommerceapp.models.Price;
 import com.scaler.ecommerceapp.models.Product;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +42,7 @@ public class EcommerceAppApplication implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
 //        Mentor mentor = new Mentor();
 //        mentor.setAvgRating(4.5f);
@@ -79,29 +78,44 @@ public class EcommerceAppApplication implements CommandLineRunner {
         student.setPsp(90);
         studentRepository.save(student);
          */
-
+    /*
         // Create a category and a product
-        Price price = new Price(10000, "INR");
+        Price price = new Price(100000, "INR");
 //        Price savedPrice = priceRespository.save(price);
+
 
         Category category = new Category();
         category.setName("Electronics");
         Category savedCategory =categoryRepository.save(category);
 
         Product product = new Product();
-        product.setTitle("iPhone 13");
-        product.setDescription("Apple iPhone 13");
+        product.setTitle("iPhone 15");
+        product.setDescription("Apple iPhone 15");
         product.setPrice(price);
         product.setCategory(savedCategory);
-        product.setImage("https://www.apple.com/newsroom/images/product/iphone/standard/Apple_new-iphone13-pro-family_09142021_big.jpg.large.jpg");
+        product.setImage("https://www.apple.com/newsroom/images/product/iphone/standard/Apple_new-iphone15-pro-family_09142021_big.jpg.large.jpg");
         productRepository.save(product);
+        */
 
-//        productRepository.deleteById(UUID.fromString("0c0c40e4-cb4a-4862-a337-c479872923f5"));
+        /*
+        Product product1 = productRepository.findByTitleAndPrice_Currency("iPhone 15", "INR");
+        System.out.println(product1);
+    */
+        /*
+
+        List<Product> products = productRepository.findByTitle("iPhone 13");
+        System.out.println(products);
+
+        Product product3 = productRepository.findByTitle2("iPhone 15");
+        System.out.println(product3);
+    */
+        // Fetch the category and print the products
+//        productRepository.deleteById(UUID.fromString("323a1948-49fc-4716-8b70-f3b24a187139"));
 
 //        // Fetch the category and print the products
 //        Optional<Category> categoryOptional = categoryRepository.findById(UUID.fromString("55ad9a5a-575b-4789-bd02-6ebb9c97a100"));
 //        if(categoryOptional.isPresent()){
-//            Category category1 = categoryOptional.get();
+//            Category category1 = categoryOp   tional.get();
 //            List<Product> products = category1.getProducts();
 //            products.forEach(product1 -> System.out.println(product1.getTitle()));
 //            System.out.println("DEBUG");
@@ -109,5 +123,14 @@ public class EcommerceAppApplication implements CommandLineRunner {
 //        else{
 //            System.out.println("Category not found");
 //        }
+
+//        Optional<Category> categoryOptional = categoryRepository
+//                .findById(UUID.fromString("848aee07-c9ca-4719-9d2e-6921154cbf4f"));
+//
+//        Category category=categoryOptional.get();
+//        System.out.println(category);
+//
+//        List<Product> products = category.getProducts();
+//        System.out.println(products);
     }
 }
