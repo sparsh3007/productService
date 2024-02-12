@@ -1,10 +1,9 @@
-package com.scaler.ecommerceapp.Controllers;
+package com.scaler.ecommerceapp.controllers;
 
 import com.scaler.ecommerceapp.dtos.GenericProductDto;
 import com.scaler.ecommerceapp.exceptions.NotFoundException;
 import com.scaler.ecommerceapp.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,24 @@ public class ProductController {
 
     @GetMapping("{id}")
     public GenericProductDto getProductById(@PathVariable Long id) throws NotFoundException {
-        return productService.getProductById(id);
+        // *****************************************************************************************
+        // Use the below code to get the product by id from the service.
+        //        return productService.getProductById(id);
+        // *****************************************************************************************
+        //  Below code is to mock the null response from the service and to test the test method in test class.
+        System.out.println("Inside ProductController getProductById");
+        System.out.println("Still Inside ProductController getProductById");
+        GenericProductDto genericProductDto= productService.getProductById(id);
+        if(genericProductDto==null){
+//            throw new NotFoundException("Product with id: "+id+ " not found.");
+            return new GenericProductDto();
+        }
+        /*******************************************************************************************
+         The below code is to mock an error in the controller and to test the test method in test class.
+         genericProductDto.setTitle("iPhone 13");
+         */
+        return genericProductDto;
+        // *****************************************************************************************
     }
 
     @PutMapping("{id}")

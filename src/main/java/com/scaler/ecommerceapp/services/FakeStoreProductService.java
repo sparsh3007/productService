@@ -65,6 +65,11 @@ public class FakeStoreProductService implements ProductService{
     }
 
     private GenericProductDto getGenericProductDto( FakeStoreProductDto fakeStoreProductDto) {
+        // This is used to handle the case when the product is not found.
+        if(fakeStoreProductDto==null){
+            return null;
+        }
+
         GenericProductDto genericProductDto=new GenericProductDto();
         genericProductDto.setId(fakeStoreProductDto.getId());
         genericProductDto.setCategory(fakeStoreProductDto.getCategory());

@@ -36,7 +36,8 @@ public class FakeStoreProductClient {
         ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity= restTemplate.getForEntity(productURL, FakeStoreProductDto.class,id);
         FakeStoreProductDto fakeStoreProductDto= fakeStoreProductDtoResponseEntity.getBody();
         if(fakeStoreProductDto==null){
-            throw new NotFoundException("Product with id: "+id+ " not found.");
+            return null;
+//            throw new NotFoundException("Product with id: "+id+ " not found.");
         }
         return fakeStoreProductDto;
     }

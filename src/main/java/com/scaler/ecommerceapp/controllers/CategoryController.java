@@ -1,4 +1,4 @@
-package com.scaler.ecommerceapp.Controllers;
+package com.scaler.ecommerceapp.controllers;
 
 import com.scaler.ecommerceapp.dtos.ProductListRequestDto;
 import com.scaler.ecommerceapp.services.CategoryService;
