@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class ProductControllerTest {
@@ -56,6 +56,15 @@ public class ProductControllerTest {
         Assertions.assertEquals(expectedGenericProductDto.getCategory(),genericProductDtoResponse.getCategory());
         Assertions.assertEquals(expectedGenericProductDto.getTitle(),genericProductDtoResponse.getTitle());
         Assertions.assertEquals(expectedGenericProductDto.getPrice(),genericProductDtoResponse.getPrice());
+    }
+    // The below test is an example of mocking whereas the above tests are examples of stubbing.
+    // We are testing the behaviour of the controller when the service returns null.
+    @Test
+    public void testGetProductByIdUsingMock() throws NotFoundException {
+        when(productServiceMock.getProductById(any(Long.class)))
+                .thenReturn(null);
+        GenericProductDto genericProductDtoResponse=productController.getProductById(null);
+        verify(productServiceMock,times(0)).getProductById(null);
     }
     /*
     private int add(int a, int b) {

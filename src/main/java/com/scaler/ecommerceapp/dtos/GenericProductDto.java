@@ -8,10 +8,10 @@ import lombok.Setter;
 @Setter
 public class GenericProductDto {
     public Long id;
+    private String  category;
     private String title;
+    private double price;
     private String description;
     private String image;
-    private String  category;
-    private double price;
     private Rating rating;
 }

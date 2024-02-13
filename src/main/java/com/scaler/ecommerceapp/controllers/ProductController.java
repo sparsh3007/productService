@@ -33,6 +33,9 @@ public class ProductController {
         //  Below code is to mock the null response from the service and to test the test method in test class.
         System.out.println("Inside ProductController getProductById");
         System.out.println("Still Inside ProductController getProductById");
+        if(id==null){
+            return new GenericProductDto();
+        }
         GenericProductDto genericProductDto= productService.getProductById(id);
         if(genericProductDto==null){
 //            throw new NotFoundException("Product with id: "+id+ " not found.");

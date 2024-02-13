@@ -20,22 +20,22 @@ import java.util.UUID;
 
 @SpringBootApplication
 public class EcommerceAppApplication implements CommandLineRunner {
-    private MentorRespository mentorRepository;
-    private StudentRepository studentRepository;
-    private CategoryRepository categoryRepository;
-    private ProductRepository productRepository;
-    private PriceRespository priceRespository;
-    public EcommerceAppApplication(MentorRespository mentorRepository,
-                                   StudentRepository studentRepository,
-                                   CategoryRepository categoryRepository,
-                                   ProductRepository productRepository,
-                                   PriceRespository priceRespository) {
-        this.studentRepository = studentRepository;
-        this.mentorRepository = mentorRepository;
-        this.categoryRepository = categoryRepository;
-        this.productRepository = productRepository;
-        this.priceRespository = priceRespository;
-    }
+//    private MentorRespository mentorRepository;
+//    private StudentRepository studentRepository;
+//    private CategoryRepository categoryRepository;
+//    private ProductRepository productRepository;
+//    private PriceRespository priceRespository;
+//    public EcommerceAppApplication(MentorRespository mentorRepository,
+//                                   StudentRepository studentRepository,
+//                                   CategoryRepository categoryRepository,
+//                                   ProductRepository productRepository,
+//                                   PriceRespository priceRespository) {
+//        this.studentRepository = studentRepository;
+//        this.mentorRepository = mentorRepository;
+//        this.categoryRepository = categoryRepository;
+//        this.productRepository = productRepository;
+//        this.priceRespository = priceRespository;
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(EcommerceAppApplication.class, args);
