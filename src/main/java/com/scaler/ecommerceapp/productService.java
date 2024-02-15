@@ -2,24 +2,13 @@ package com.scaler.ecommerceapp;
 
 
 
-import com.scaler.ecommerceapp.InheritanceExample.joined.MentorRespository;
-import com.scaler.ecommerceapp.InheritanceExample.joined.StudentRepository;
-import com.scaler.ecommerceapp.Repositories.CategoryRepository;
-import com.scaler.ecommerceapp.Repositories.PriceRespository;
-import com.scaler.ecommerceapp.Repositories.ProductRepository;
-import com.scaler.ecommerceapp.models.Category;
-import com.scaler.ecommerceapp.models.Product;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 @SpringBootApplication
-public class EcommerceAppApplication implements CommandLineRunner {
+public class productService implements CommandLineRunner {
 //    private MentorRespository mentorRepository;
 //    private StudentRepository studentRepository;
 //    private CategoryRepository categoryRepository;
@@ -38,7 +27,7 @@ public class EcommerceAppApplication implements CommandLineRunner {
 //    }
 
     public static void main(String[] args) {
-        SpringApplication.run(EcommerceAppApplication.class, args);
+        SpringApplication.run(productService.class, args);
     }
 
     @Override

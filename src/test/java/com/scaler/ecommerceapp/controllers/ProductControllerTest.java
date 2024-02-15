@@ -4,7 +4,10 @@ import com.scaler.ecommerceapp.dtos.GenericProductDto;
 import com.scaler.ecommerceapp.exceptions.NotFoundException;
 import com.scaler.ecommerceapp.services.ProductService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,6 +28,8 @@ public class ProductControllerTest {
         this.productController=new ProductController(productServiceMock);
     }
      */
+    @Captor
+    private ArgumentCaptor<Long> idCaptor;
     @Test
     public void testGetProductByIdReturnsEmptyObjectWhenProductNotFound() throws NotFoundException {
         when(productServiceMock.getProductById(any(Long.class)))
@@ -65,6 +70,16 @@ public class ProductControllerTest {
                 .thenReturn(null);
         GenericProductDto genericProductDtoResponse=productController.getProductById(null);
         verify(productServiceMock,times(0)).getProductById(null);
+    }
+    @Test
+    @DisplayName("Test getProductById method in ProductController using ArgumentCaptor")
+    public void testGetProductByIdCheckId() throws NotFoundException {
+        when(productServiceMock.getProductById(any(Long.class)))
+                .thenReturn(null);
+        GenericProductDto genericProductDtoResponse=productController.getProductById(1L);
+        verify(productServiceMock).getProductById(idCaptor.capture());
+        Long capturedId=idCaptor.getValue();
+        Assertions.assertEquals(1L,capturedId);
     }
     /*
     private int add(int a, int b) {
