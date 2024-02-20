@@ -2,6 +2,8 @@ package com.scaler.productService.controllers;
 
 import com.scaler.productService.dtos.GenericProductDto;
 import com.scaler.productService.exceptions.NotFoundException;
+import com.scaler.productService.security.JwtData;
+import com.scaler.productService.security.TokenValidator;
 import com.scaler.productService.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,15 +12,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 //    @Autowired
     private ProductService productService;
+    private TokenValidator tokenValidator;
     @Autowired
-    public ProductController(ProductService productService){
+    public ProductController(ProductService productService,
+                             TokenValidator tokenValidator){
         this.productService=productService;
+        this.tokenValidator=tokenValidator;
     }
     @GetMapping()
     public List<GenericProductDto> getAllProducts(){
@@ -35,6 +41,11 @@ public class ProductController {
         //  Below code is to mock the null response from the service and to test the test method in test class.
         System.out.println("Inside ProductController getProductById");
         System.out.println("Still Inside ProductController getProductById");
+
+        Optional<JwtData> jwtData = tokenValidator.validateToken(authorizationToken);
+        if(jwtData.isEmpty()){
+            throw new NotFoundException("Invalid token");
+        }
         if(id==null){
             return new GenericProductDto();
         }
