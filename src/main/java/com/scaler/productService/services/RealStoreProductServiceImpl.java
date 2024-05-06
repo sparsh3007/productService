@@ -14,9 +14,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service("selfProductService")
-public class SelfProductServiceImpl implements ProductService{
+public class RealStoreProductServiceImpl implements ProductService{
     ProductRepository productRepository;
-    public SelfProductServiceImpl(ProductRepository productRepository) {
+    public RealStoreProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 

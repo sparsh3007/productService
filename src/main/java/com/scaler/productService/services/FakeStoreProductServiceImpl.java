@@ -14,10 +14,10 @@ import java.util.Objects;
 
 @Primary // This annotation is used to tell Spring that this is the primary implementation of ProductService
 @Service("fakeStoreProductService") // This annotation is used to tell Spring that this is a service class
-public class FakeStoreProductService implements ProductService{
+public class FakeStoreProductServiceImpl implements ProductService{
     private FakeStoreProductClient fakeStoreProductClient;
     @Autowired
-    public FakeStoreProductService(FakeStoreProductClient fakeStoreProductClient){
+    public FakeStoreProductServiceImpl(FakeStoreProductClient fakeStoreProductClient){
         this.fakeStoreProductClient=fakeStoreProductClient;
     }
     @Override

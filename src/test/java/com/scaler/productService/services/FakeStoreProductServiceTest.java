@@ -15,7 +15,7 @@
 //@SpringBootTest
 //public class FakeStoreProductServiceTest {
 //    @Autowired
-//    FakeStoreProductService fakeStoreProductService;
+//    FakeStoreProductServiceImpl fakeStoreProductService;
 //    @MockBean
 //    FakeStoreProductClient fakeStoreProductClient;
 //    @Test

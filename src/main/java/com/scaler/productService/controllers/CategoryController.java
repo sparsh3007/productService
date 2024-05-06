@@ -20,6 +20,5 @@ public class CategoryController {
     @GetMapping
     public void getProductsList(@RequestBody ProductListRequestDto productListRequestDto) {
         categoryService.getProductsList(productListRequestDto.getCategoryUuids());
-
     }
 }
