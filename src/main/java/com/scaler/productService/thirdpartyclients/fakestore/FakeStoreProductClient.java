@@ -28,7 +28,7 @@ public class FakeStoreProductClient {
     public FakeStoreProductClient(RestTemplateBuilder restTemplateBuilder,@Value("${fakestore.api.baseurl}") String fakeStoreApiBaseUrl,
                                   @Value("${fakestore.api.product}") String fakeStoreApiProductsPath){
         this.restTemplateBuilder=restTemplateBuilder;
-        productURL=fakeStoreApiBaseUrl+fakeStoreApiProductsPath+"/{id}";
+        productURL=fakeStoreApiBaseUrl+fakeStoreApiProductsPath+"/{uuid}";
         productRequestURL =fakeStoreApiBaseUrl+fakeStoreApiProductsPath;
     }
     public FakeStoreProductDto getProductById(Long id) throws NotFoundException {
@@ -37,7 +37,7 @@ public class FakeStoreProductClient {
         FakeStoreProductDto fakeStoreProductDto= fakeStoreProductDtoResponseEntity.getBody();
         if(fakeStoreProductDto==null){
             return null;
-//            throw new NotFoundException("Product with id: "+id+ " not found.");
+//            throw new NotFoundException("Product with uuid: "+uuid+ " not found.");
         }
         return fakeStoreProductDto;
     }
@@ -47,7 +47,7 @@ public class FakeStoreProductClient {
         ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity= restTemplate.postForEntity(productRequestURL,product,FakeStoreProductDto.class);
         FakeStoreProductDto fakeStoreProductDto= fakeStoreProductDtoResponseEntity.getBody();
         if(fakeStoreProductDto==null){
-            throw new NotFoundException("Product with id: "+product.getId()+ " not found.");
+            throw new NotFoundException("Product with uuid: "+product.getId()+ " not found.");
         }
         return fakeStoreProductDto;
     }
@@ -65,7 +65,7 @@ public class FakeStoreProductClient {
         ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity= restTemplate.exchange(productURL, HttpMethod.DELETE,null,FakeStoreProductDto.class,id);
         FakeStoreProductDto fakeStoreProductDto= fakeStoreProductDtoResponseEntity.getBody();
         if(fakeStoreProductDto==null){
-            throw new NotFoundException("Product with id: "+id+ " not found.");
+            throw new NotFoundException("Product with uuid: "+id+ " not found.");
         }
         return fakeStoreProductDto;
     }
@@ -77,7 +77,7 @@ public class FakeStoreProductClient {
         ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity= restTemplate.exchange(productURL,HttpMethod.PUT,requestEntity, FakeStoreProductDto.class,id);
         FakeStoreProductDto fakeStoreProductDto= fakeStoreProductDtoResponseEntity.getBody();
         if(fakeStoreProductDto==null){
-            throw new NotFoundException("Product with id: "+id+ " not found.");
+            throw new NotFoundException("Product with uuid: "+id+ " not found.");
         }
         return fakeStoreProductDto;
     }

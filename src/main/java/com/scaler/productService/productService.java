@@ -104,7 +104,7 @@ public class productService implements CommandLineRunner {
 //        // Fetch the category and print the products
 //        Optional<Category> categoryOptional = categoryRepository.findById(UUID.fromString("55ad9a5a-575b-4789-bd02-6ebb9c97a100"));
 //        if(categoryOptional.isPresent()){
-//            Category category1 = categoryOp   tional.get();
+//            Category category1 = categoryOptional.get();
 //            List<Product> products = category1.getProducts();
 //            products.forEach(product1 -> System.out.println(product1.getTitle()));
 //            System.out.println("DEBUG");

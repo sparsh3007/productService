@@ -1,9 +1,12 @@
 package com.scaler.productService.Repositories;
 
 import com.scaler.productService.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -17,5 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     // Write a query to find the product by title using a non-native query
 //    @Query(value = "FROM Product WHERE Product.title= :title",nativeQuery = false)
 //    Product findByTitle2(String title);
-
+    Page<Product> findAllByTitle(String title, Pageable pageable);
+    Page<Product> findAllByTitleContaining(String title, Pageable pageable);
 }

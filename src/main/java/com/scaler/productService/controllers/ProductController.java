@@ -33,10 +33,10 @@ public class ProductController {
 
     @GetMapping("{id}")
     public GenericProductDto getProductById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationToken,
-                                            @PathVariable Long id) throws NotFoundException {
+                                            @PathVariable String id) throws NotFoundException {
         // *****************************************************************************************
-        // Use the below code to get the product by id from the service.
-        //        return productService.getProductById(id);
+        // Use the below code to get the product by uuid from the service.
+        //        return productService.getProductById(uuid);
         // *****************************************************************************************
         //  Below code is to mock the null response from the service and to test the test method in test class.
         System.out.println("Inside ProductController getProductById");
@@ -51,7 +51,7 @@ public class ProductController {
         }
         GenericProductDto genericProductDto= productService.getProductById(id);
         if(genericProductDto==null){
-//            throw new NotFoundException("Product with id: "+id+ " not found.");
+//            throw new NotFoundException("Product with uuid: "+uuid+ " not found.");
             return new GenericProductDto();
         }
         /*******************************************************************************************
@@ -63,7 +63,7 @@ public class ProductController {
     }
 
     @PutMapping("{id}")
-    public GenericProductDto updateProductById(@PathVariable Long id,@RequestBody GenericProductDto genericProductDto) throws NotFoundException {
+    public GenericProductDto updateProductById(@PathVariable String id,@RequestBody GenericProductDto genericProductDto) throws NotFoundException {
         return productService.updateProductById(id,genericProductDto);
     }
     @PostMapping()
@@ -71,10 +71,11 @@ public class ProductController {
         return productService.createProduct(genericProductDto);
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<GenericProductDto> deleteProduct(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<GenericProductDto> deleteProduct(@PathVariable String id) throws NotFoundException {
         return  new ResponseEntity<>(productService.deleteProduct(id),HttpStatus.OK);
     }
 //    -------This is specific to this controller --------
+//    Used GlobalExceptionHandler inside exceptions package to handle the NotFoundException instead of handling it here.
 //    @ExceptionHandler(NotFoundException.class)
 //    public ResponseEntity<ExceptionDto> handleNotFoundException(NotFoundException notFoundException){
 //        return new ResponseEntity<>(new ExceptionDto(HttpStatus.NOT_FOUND,notFoundException.getMessage()),HttpStatus.NOT_FOUND);

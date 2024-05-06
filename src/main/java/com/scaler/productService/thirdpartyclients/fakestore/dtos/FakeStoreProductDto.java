@@ -4,6 +4,8 @@ import com.scaler.productService.models.Rating;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class FakeStoreProductDto {

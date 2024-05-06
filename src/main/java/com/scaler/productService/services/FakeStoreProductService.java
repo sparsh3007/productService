@@ -21,8 +21,8 @@ public class FakeStoreProductService implements ProductService{
         this.fakeStoreProductClient=fakeStoreProductClient;
     }
     @Override
-    public GenericProductDto getProductById(Long id) throws NotFoundException {
-        FakeStoreProductDto fakeStoreProductDto=fakeStoreProductClient.getProductById(id);
+    public GenericProductDto getProductById(String id) throws NotFoundException {
+        FakeStoreProductDto fakeStoreProductDto=fakeStoreProductClient.getProductById(Long.parseLong(id));
         return getGenericProductDto(fakeStoreProductDto);
     }
 
@@ -44,23 +44,23 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public GenericProductDto deleteProduct(Long id) throws NotFoundException {
-        FakeStoreProductDto fakeStoreProductDto=fakeStoreProductClient.deleteProduct(id);
+    public GenericProductDto deleteProduct(String id) throws NotFoundException {
+        FakeStoreProductDto fakeStoreProductDto=fakeStoreProductClient.deleteProduct(Long.parseLong(id));
         return getGenericProductDto(fakeStoreProductDto);
     }
 
     @Override
-    public GenericProductDto updateProductById(Long id,GenericProductDto genericPoduct) throws NotFoundException {
+    public GenericProductDto updateProductById(String id,GenericProductDto genericProduct) throws NotFoundException {
 //       Convert GenericProductDto to FakeStoreProductDto
         FakeStoreProductDto fakeStoreProduct=new FakeStoreProductDto();
-        fakeStoreProduct.setId(genericPoduct.getId());
-        fakeStoreProduct.setCategory(genericPoduct.getCategory());
-        fakeStoreProduct.setTitle(genericPoduct.getTitle());
-        fakeStoreProduct.setPrice(genericPoduct.getPrice());
-        fakeStoreProduct.setImage(genericPoduct.getImage());
-        fakeStoreProduct.setDescription(genericPoduct.getDescription());
-        fakeStoreProduct.setRating(genericPoduct.getRating());
-        FakeStoreProductDto fakeStoreProductDto=fakeStoreProductClient.updateProductById(id,fakeStoreProduct);
+        fakeStoreProduct.setId(Long.parseLong(genericProduct.getId()));
+        fakeStoreProduct.setCategory(genericProduct.getCategory());
+        fakeStoreProduct.setTitle(genericProduct.getTitle());
+        fakeStoreProduct.setPrice(genericProduct.getPrice());
+        fakeStoreProduct.setImage(genericProduct.getImage());
+        fakeStoreProduct.setDescription(genericProduct.getDescription());
+        fakeStoreProduct.setRating(genericProduct.getRating());
+        FakeStoreProductDto fakeStoreProductDto=fakeStoreProductClient.updateProductById(Long.parseLong(id),fakeStoreProduct);
         return getGenericProductDto(fakeStoreProductDto);
     }
 
@@ -71,7 +71,7 @@ public class FakeStoreProductService implements ProductService{
         }
 
         GenericProductDto genericProductDto=new GenericProductDto();
-        genericProductDto.setId(fakeStoreProductDto.getId());
+        genericProductDto.setId(fakeStoreProductDto.getId().toString());
         genericProductDto.setCategory(fakeStoreProductDto.getCategory());
         genericProductDto.setTitle(fakeStoreProductDto.getTitle());
         genericProductDto.setPrice(fakeStoreProductDto.getPrice());

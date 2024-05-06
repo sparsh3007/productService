@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GenericProductDto {
-    public Long id;
-    private String  category;
+    public String id;
+    private String category;
     private String title;
     private double price;
     private String description;

@@ -23,7 +23,6 @@ public class CategoryService {
         Optional<Category> categoryOptional = categoryRepository.findById(UUID.fromString(uuid));
         Category category = categoryOptional.get();
         System.out.println(category);
-
         List<Product> products = category.getProducts();
         System.out.println(products);
     }
