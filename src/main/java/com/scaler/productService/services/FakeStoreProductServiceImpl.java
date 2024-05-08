@@ -1,5 +1,8 @@
 package com.scaler.productService.services;
 
+import com.scaler.productService.dtos.UpdateProductRequestDto;
+import com.scaler.productService.dtos.UpdateProductResponseDto;
+import com.scaler.productService.models.Price;
 import com.scaler.productService.thirdpartyclients.fakestore.FakeStoreProductClient;
 import com.scaler.productService.thirdpartyclients.fakestore.dtos.FakeStoreProductDto;
 import com.scaler.productService.dtos.GenericProductDto;
@@ -12,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Primary // This annotation is used to tell Spring that this is the primary implementation of ProductService
+//@Primary // This annotation is used to tell Spring that this is the primary implementation of ProductService
 @Service("fakeStoreProductService") // This annotation is used to tell Spring that this is a service class
 public class FakeStoreProductServiceImpl implements ProductService{
     private FakeStoreProductClient fakeStoreProductClient;
@@ -50,18 +53,41 @@ public class FakeStoreProductServiceImpl implements ProductService{
     }
 
     @Override
-    public GenericProductDto updateProductById(String id,GenericProductDto genericProduct) throws NotFoundException {
+    public UpdateProductResponseDto updateProductById(String id, UpdateProductRequestDto updateProductRequestDto) throws NotFoundException {
 //       Convert GenericProductDto to FakeStoreProductDto
-        FakeStoreProductDto fakeStoreProduct=new FakeStoreProductDto();
-        fakeStoreProduct.setId(Long.parseLong(genericProduct.getId()));
-        fakeStoreProduct.setCategory(genericProduct.getCategory());
-        fakeStoreProduct.setTitle(genericProduct.getTitle());
-        fakeStoreProduct.setPrice(genericProduct.getPrice());
-        fakeStoreProduct.setImage(genericProduct.getImage());
-        fakeStoreProduct.setDescription(genericProduct.getDescription());
-        fakeStoreProduct.setRating(genericProduct.getRating());
+        FakeStoreProductDto fakeStoreProduct= fakeStoreProductClient.getProductById(Long.parseLong(id));
+
+        if (updateProductRequestDto.getPrice()!=null) {
+            fakeStoreProduct.setPrice(updateProductRequestDto.getPrice().getPrice());
+        }
+        if(updateProductRequestDto.getRating()!=null){
+            fakeStoreProduct.setRating(updateProductRequestDto.getRating());
+        }
+        if (updateProductRequestDto.getTitle()!=null) {
+            fakeStoreProduct.setTitle(updateProductRequestDto.getTitle());
+        }
+        if(updateProductRequestDto.getCategory()!=null){
+            fakeStoreProduct.setCategory(updateProductRequestDto.getCategory());
+        }
+        if(updateProductRequestDto.getImage()!=null){
+            fakeStoreProduct.setImage(updateProductRequestDto.getImage());
+        }
+        if(updateProductRequestDto.getDescription()!=null){
+            fakeStoreProduct.setDescription(updateProductRequestDto.getDescription());
+        }
+
         FakeStoreProductDto fakeStoreProductDto=fakeStoreProductClient.updateProductById(Long.parseLong(id),fakeStoreProduct);
-        return getGenericProductDto(fakeStoreProductDto);
+
+        UpdateProductResponseDto updateProductResponseDto=new UpdateProductResponseDto();
+        updateProductResponseDto.setId(fakeStoreProductDto.getId().toString());
+        updateProductResponseDto.setCategory(fakeStoreProductDto.getCategory());
+        updateProductResponseDto.setTitle(fakeStoreProductDto.getTitle());
+        Price price=new Price();
+        price.setPrice(fakeStoreProductDto.getPrice());
+        updateProductResponseDto.setPrice(price);
+        updateProductResponseDto.setImage(fakeStoreProductDto.getImage());
+        updateProductResponseDto.setDescription(fakeStoreProductDto.getDescription());
+        return updateProductResponseDto;
     }
 
     private GenericProductDto getGenericProductDto( FakeStoreProductDto fakeStoreProductDto) {
@@ -74,10 +100,11 @@ public class FakeStoreProductServiceImpl implements ProductService{
         genericProductDto.setId(fakeStoreProductDto.getId().toString());
         genericProductDto.setCategory(fakeStoreProductDto.getCategory());
         genericProductDto.setTitle(fakeStoreProductDto.getTitle());
-        genericProductDto.setPrice(fakeStoreProductDto.getPrice());
+        Price price=new Price();
+        price.setPrice(fakeStoreProductDto.getPrice());
+        genericProductDto.setPrice(price);
         genericProductDto.setImage(fakeStoreProductDto.getImage());
         genericProductDto.setDescription(fakeStoreProductDto.getDescription());
-        genericProductDto.setRating(fakeStoreProductDto.getRating());
         return genericProductDto;
     }
 }

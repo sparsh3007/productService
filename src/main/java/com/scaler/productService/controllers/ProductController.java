@@ -1,6 +1,8 @@
 package com.scaler.productService.controllers;
 
 import com.scaler.productService.dtos.GenericProductDto;
+import com.scaler.productService.dtos.UpdateProductRequestDto;
+import com.scaler.productService.dtos.UpdateProductResponseDto;
 import com.scaler.productService.exceptions.NotFoundException;
 import com.scaler.productService.security.JwtData;
 import com.scaler.productService.security.TokenValidator;
@@ -27,32 +29,32 @@ public class ProductController {
         this.tokenValidator=tokenValidator;
     }
     @GetMapping()
-    public List<GenericProductDto> getAllProducts(){
+    public List<GenericProductDto> getAllProducts() throws NotFoundException {
         return productService.getAllProducts();
     }
 
     @GetMapping("{id}")
-    public GenericProductDto getProductById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationToken,
-                                            @PathVariable String id) throws NotFoundException {
+    public GenericProductDto getProductById(@PathVariable String id) throws NotFoundException { //(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationToken,
+                                            //@PathVariable String id) throws NotFoundException {
         // *****************************************************************************************
         // Use the below code to get the product by uuid from the service.
         //        return productService.getProductById(uuid);
         // *****************************************************************************************
         //  Below code is to mock the null response from the service and to test the test method in test class.
-        System.out.println("Inside ProductController getProductById");
-        System.out.println("Still Inside ProductController getProductById");
-
-        Optional<JwtData> jwtData = tokenValidator.validateToken(authorizationToken);
-        if(jwtData.isEmpty()){
-            throw new NotFoundException("Invalid token");
-        }
+//        System.out.println("Inside ProductController getProductById");
+//        System.out.println("Still Inside ProductController getProductById");
+//
+//        Optional<JwtData> jwtData = tokenValidator.validateToken(authorizationToken);
+//        if(jwtData.isEmpty()){
+//            throw new NotFoundException("Invalid token");
+//        }
         if(id==null){
             return new GenericProductDto();
         }
         GenericProductDto genericProductDto= productService.getProductById(id);
         if(genericProductDto==null){
-//            throw new NotFoundException("Product with uuid: "+uuid+ " not found.");
-            return new GenericProductDto();
+            throw new NotFoundException("Product with uuid: "+id+ " not found.");
+//            return new GenericProductDto();
         }
         /*******************************************************************************************
          The below code is to mock an error in the controller and to test the test method in test class.
@@ -63,8 +65,8 @@ public class ProductController {
     }
 
     @PutMapping("{id}")
-    public GenericProductDto updateProductById(@PathVariable String id,@RequestBody GenericProductDto genericProductDto) throws NotFoundException {
-        return productService.updateProductById(id,genericProductDto);
+    public UpdateProductResponseDto updateProductById(@PathVariable String id, @RequestBody UpdateProductRequestDto updateProductRequestDto) throws NotFoundException {
+        return productService.updateProductById(id,updateProductRequestDto);
     }
     @PostMapping()
     public GenericProductDto createProduct(@RequestBody GenericProductDto genericProductDto) throws NotFoundException {

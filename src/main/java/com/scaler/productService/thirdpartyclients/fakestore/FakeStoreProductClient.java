@@ -44,12 +44,18 @@ public class FakeStoreProductClient {
 
     public FakeStoreProductDto createProduct(GenericProductDto product) throws NotFoundException {
         RestTemplate restTemplate=restTemplateBuilder.build();
-        ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity= restTemplate.postForEntity(productRequestURL,product,FakeStoreProductDto.class);
-        FakeStoreProductDto fakeStoreProductDto= fakeStoreProductDtoResponseEntity.getBody();
-        if(fakeStoreProductDto==null){
+        FakeStoreProductDto fakeStoreProductDto=new FakeStoreProductDto();
+        fakeStoreProductDto.setTitle(product.getTitle());
+        fakeStoreProductDto.setPrice(product.getPrice().getPrice());
+        fakeStoreProductDto.setDescription(product.getDescription());
+        fakeStoreProductDto.setCategory(product.getCategory());
+        fakeStoreProductDto.setImage(product.getImage());
+        ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity= restTemplate.postForEntity(productRequestURL,fakeStoreProductDto,FakeStoreProductDto.class);
+        FakeStoreProductDto fakeStoreProductDtoResponseEntityBody= fakeStoreProductDtoResponseEntity.getBody();
+        if(fakeStoreProductDtoResponseEntityBody==null){
             throw new NotFoundException("Product with uuid: "+product.getId()+ " not found.");
         }
-        return fakeStoreProductDto;
+        return fakeStoreProductDtoResponseEntityBody;
     }
 
     public List<FakeStoreProductDto> getAllProducts() {

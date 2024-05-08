@@ -17,6 +17,7 @@ public class Product extends BaseModel{
     private Category category;
     @OneToOne(cascade = {CascadeType.REMOVE,CascadeType.PERSIST} )
     private Price price;
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     private Rating rating;
+    private int inventoryCount;
 }

@@ -1,5 +1,6 @@
 package com.scaler.productService.dtos;
 
+import com.scaler.productService.models.Price;
 import com.scaler.productService.models.Rating;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +11,8 @@ public class GenericProductDto {
     public String id;
     private String category;
     private String title;
-    private double price;
+    private Price price;
     private String description;
     private String image;
-    private Rating rating;
+    private int inventoryCount;
 }
