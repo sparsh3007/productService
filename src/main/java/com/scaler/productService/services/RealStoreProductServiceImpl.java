@@ -4,6 +4,7 @@ import com.scaler.productService.Repositories.CategoryRepository;
 import com.scaler.productService.Repositories.PriceRespository;
 import com.scaler.productService.Repositories.ProductRepository;
 import com.scaler.productService.dtos.GenericProductDto;
+import com.scaler.productService.dtos.GenericProductResponseDto;
 import com.scaler.productService.dtos.UpdateProductRequestDto;
 import com.scaler.productService.dtos.UpdateProductResponseDto;
 import com.scaler.productService.exceptions.NotFoundException;
@@ -91,17 +92,30 @@ public class RealStoreProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<GenericProductDto> getAllProducts() throws NotFoundException {
+    public List<GenericProductResponseDto> getAllProducts() throws NotFoundException {
         List<Product> products = productRepository.findAll();
         if(!products.isEmpty()){
-            List<GenericProductDto> genericProductDtos = new java.util.ArrayList<>();
+            List<GenericProductResponseDto> genericProductResponseDtos = new java.util.ArrayList<>();
             for(Product product:products){
-                GenericProductDto genericProductDto = getGenericProductDto(product);
-                genericProductDtos.add(genericProductDto);
+                GenericProductResponseDto genericProductResponseDto = getGenericProductResonseDto(product);
+                genericProductResponseDtos.add(genericProductResponseDto);
             }
-            return genericProductDtos;
+            return genericProductResponseDtos;
         }
         throw new NotFoundException("No products found.");
+    }
+
+    private GenericProductResponseDto getGenericProductResonseDto(Product product) {
+        GenericProductResponseDto genericProductResponseDto = new GenericProductResponseDto();
+        genericProductResponseDto.setId(product.getUuid().toString());
+        genericProductResponseDto.setTitle(product.getTitle());
+        genericProductResponseDto.setDescription(product.getDescription());
+        genericProductResponseDto.setImage(product.getImage());
+        genericProductResponseDto.setCategory(product.getCategory().getName());
+        genericProductResponseDto.setPrice(product.getPrice());
+        genericProductResponseDto.setInventoryCount(product.getInventoryCount());
+        genericProductResponseDto.setRating(product.getRating());
+        return genericProductResponseDto;
     }
 
     @Override
@@ -137,7 +151,7 @@ public class RealStoreProductServiceImpl implements ProductService{
             category.setName(updateProductRequestDto.getCategory());
             product.setCategory(category);
         }
-        if(updateProductRequestDto.getPrice().getPrice()!=0.0){
+        if(updateProductRequestDto.getPrice()!=null && updateProductRequestDto.getPrice().getPrice()!=0.0){
             Optional<Price> price = priceRespository.findById(product.getPrice().getUuid());
             if(price.isEmpty()){
                 throw new NotFoundException("Price not found.");

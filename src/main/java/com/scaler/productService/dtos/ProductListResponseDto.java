@@ -11,6 +11,7 @@ public class ProductListResponseDto {
     private String category;
     private String title;
     private double price;
+    private String currency;
     private String image;
     private double rating;
 }

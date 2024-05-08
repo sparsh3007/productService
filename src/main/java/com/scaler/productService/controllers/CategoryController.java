@@ -14,20 +14,29 @@ import java.util.List;
 @RequestMapping("/categories")
 public class CategoryController {
     private CategoryService categoryService;
+
     @Autowired
-    public CategoryController(CategoryService categoryService){
-        this.categoryService=categoryService;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
+
     @GetMapping("{uuid}")
     public void getCategory(@PathVariable("uuid") String uuid) {
         categoryService.getCategory(uuid);
     }
+
     @GetMapping("/products")
     public List<ProductListResponseDto> getProductsList(@RequestBody ProductListRequestDto productListRequestDto) {
         return categoryService.getProductsList(productListRequestDto.getCategoryUuids());
     }
+
     @GetMapping("/all")
     public AllCategoriesResponseDto getAllCategories() throws NotFoundException {
         return categoryService.getAllCategories();
+    }
+
+    @GetMapping("/products/{category}")
+    public List<ProductListResponseDto> getProductsList(@PathVariable("category") String category) throws NotFoundException {
+        return categoryService.getProductsList(category);
     }
 }

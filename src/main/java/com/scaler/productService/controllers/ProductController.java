@@ -1,6 +1,7 @@
 package com.scaler.productService.controllers;
 
 import com.scaler.productService.dtos.GenericProductDto;
+import com.scaler.productService.dtos.GenericProductResponseDto;
 import com.scaler.productService.dtos.UpdateProductRequestDto;
 import com.scaler.productService.dtos.UpdateProductResponseDto;
 import com.scaler.productService.exceptions.NotFoundException;
@@ -29,7 +30,8 @@ public class ProductController {
         this.tokenValidator=tokenValidator;
     }
     @GetMapping()
-    public List<GenericProductDto> getAllProducts() throws NotFoundException {
+    public List<GenericProductResponseDto> getAllProducts() throws NotFoundException {
+
         return productService.getAllProducts();
     }
 

@@ -1,5 +1,6 @@
 package com.scaler.productService.services;
 
+import com.scaler.productService.dtos.GenericProductResponseDto;
 import com.scaler.productService.dtos.UpdateProductRequestDto;
 import com.scaler.productService.dtos.UpdateProductResponseDto;
 import com.scaler.productService.models.Price;
@@ -36,14 +37,28 @@ public class FakeStoreProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<GenericProductDto> getAllProducts() {
+    public List<GenericProductResponseDto> getAllProducts() {
         List<FakeStoreProductDto> fakeStoreProductDtoList=fakeStoreProductClient.getAllProducts();
-        List<GenericProductDto> genericProductDtoList=new ArrayList<>();
+        List<GenericProductResponseDto> genericProductResponseDtoList=new ArrayList<>();
         for(int i = 0; i< Objects.requireNonNull(fakeStoreProductDtoList).size(); i++){
-            GenericProductDto genericProductDto = getGenericProductDto(fakeStoreProductDtoList.get(i));
-            genericProductDtoList.add(genericProductDto);
+            GenericProductResponseDto genericProductResponseDto = getGenericProductResponseDto(fakeStoreProductDtoList.get(i));
+            genericProductResponseDtoList.add(genericProductResponseDto);
         }
-        return genericProductDtoList;
+        return genericProductResponseDtoList;
+    }
+
+    private GenericProductResponseDto getGenericProductResponseDto(FakeStoreProductDto fakeStoreProductDto) {
+        GenericProductResponseDto genericProductResponseDto=new GenericProductResponseDto();
+        genericProductResponseDto.setId(fakeStoreProductDto.getId().toString());
+        genericProductResponseDto.setCategory(fakeStoreProductDto.getCategory());
+        genericProductResponseDto.setTitle(fakeStoreProductDto.getTitle());
+        Price price=new Price();
+        price.setPrice(fakeStoreProductDto.getPrice());
+        price.setCurrency("INR");
+        genericProductResponseDto.setPrice(price);
+        genericProductResponseDto.setImage(fakeStoreProductDto.getImage());
+        genericProductResponseDto.setRating(fakeStoreProductDto.getRating());
+        return genericProductResponseDto;
     }
 
     @Override
