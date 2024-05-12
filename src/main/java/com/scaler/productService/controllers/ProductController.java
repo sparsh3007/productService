@@ -5,29 +5,29 @@ import com.scaler.productService.dtos.GenericProductResponseDto;
 import com.scaler.productService.dtos.UpdateProductRequestDto;
 import com.scaler.productService.dtos.UpdateProductResponseDto;
 import com.scaler.productService.exceptions.NotFoundException;
-import com.scaler.productService.security.JwtData;
-import com.scaler.productService.security.TokenValidator;
+//import com.scaler.productService.security.JwtData;
+//import com.scaler.productService.security.TokenValidator;
 import com.scaler.productService.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+//import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 //    @Autowired
     private ProductService productService;
-    private TokenValidator tokenValidator;
+//    private TokenValidator tokenValidator;
     @Autowired
-    public ProductController(ProductService productService,
-                             TokenValidator tokenValidator){
+    public ProductController(ProductService productService){ //,
+//                             TokenValidator tokenValidator){
         this.productService=productService;
-        this.tokenValidator=tokenValidator;
+//        this.tokenValidator=tokenValidator;
     }
     @GetMapping()
     public List<GenericProductResponseDto> getAllProducts() throws NotFoundException {
@@ -50,9 +50,7 @@ public class ProductController {
 //        if(jwtData.isEmpty()){
 //            throw new NotFoundException("Invalid token");
 //        }
-        if(id==null){
-            return new GenericProductDto();
-        }
+
         GenericProductDto genericProductDto= productService.getProductById(id);
         if(genericProductDto==null){
             throw new NotFoundException("Product with uuid: "+id+ " not found.");

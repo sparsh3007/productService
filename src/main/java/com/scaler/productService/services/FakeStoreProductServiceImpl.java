@@ -64,6 +64,9 @@ public class FakeStoreProductServiceImpl implements ProductService{
     @Override
     public GenericProductDto deleteProduct(String id) throws NotFoundException {
         FakeStoreProductDto fakeStoreProductDto=fakeStoreProductClient.deleteProduct(Long.parseLong(id));
+        if(fakeStoreProductDto==null){
+            throw new NotFoundException("Product with id: "+id+ " not found.");
+        }
         return getGenericProductDto(fakeStoreProductDto);
     }
 
@@ -106,16 +109,13 @@ public class FakeStoreProductServiceImpl implements ProductService{
     }
 
     private GenericProductDto getGenericProductDto( FakeStoreProductDto fakeStoreProductDto) {
-        // This is used to handle the case when the product is not found.
-        if(fakeStoreProductDto==null){
-            return null;
-        }
 
         GenericProductDto genericProductDto=new GenericProductDto();
         genericProductDto.setId(fakeStoreProductDto.getId().toString());
         genericProductDto.setCategory(fakeStoreProductDto.getCategory());
         genericProductDto.setTitle(fakeStoreProductDto.getTitle());
         Price price=new Price();
+        price.setCurrency("INR");
         price.setPrice(fakeStoreProductDto.getPrice());
         genericProductDto.setPrice(price);
         genericProductDto.setImage(fakeStoreProductDto.getImage());
