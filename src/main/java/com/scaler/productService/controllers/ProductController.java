@@ -7,14 +7,18 @@ import com.scaler.productService.dtos.UpdateProductResponseDto;
 import com.scaler.productService.exceptions.NotFoundException;
 //import com.scaler.productService.security.JwtData;
 //import com.scaler.productService.security.TokenValidator;
+import com.scaler.productService.security.JwtData;
+import com.scaler.productService.security.TokenValidator;
 import com.scaler.productService.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 //import java.util.Optional;
 
 @RestController
@@ -22,12 +26,12 @@ import java.util.List;
 public class ProductController {
 //    @Autowired
     private ProductService productService;
-//    private TokenValidator tokenValidator;
+    private TokenValidator tokenValidator;
     @Autowired
-    public ProductController(ProductService productService){ //,
-//                             TokenValidator tokenValidator){
+    public ProductController(ProductService productService,
+                             TokenValidator tokenValidator){
         this.productService=productService;
-//        this.tokenValidator=tokenValidator;
+        this.tokenValidator=tokenValidator;
     }
     @GetMapping()
     public List<GenericProductResponseDto> getAllProducts() throws NotFoundException {
@@ -36,8 +40,8 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public GenericProductDto getProductById(@PathVariable String id) throws NotFoundException { //(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationToken,
-                                            //@PathVariable String id) throws NotFoundException {
+    public GenericProductDto getProductById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationToken,
+                                            @PathVariable String id) throws NotFoundException {
         // *****************************************************************************************
         // Use the below code to get the product by uuid from the service.
         //        return productService.getProductById(uuid);
@@ -46,15 +50,13 @@ public class ProductController {
 //        System.out.println("Inside ProductController getProductById");
 //        System.out.println("Still Inside ProductController getProductById");
 //
-//        Optional<JwtData> jwtData = tokenValidator.validateToken(authorizationToken);
-//        if(jwtData.isEmpty()){
-//            throw new NotFoundException("Invalid token");
-//        }
-
+        Optional<JwtData> jwtData = tokenValidator.validateToken(authorizationToken);
+        if(jwtData.isEmpty()){
+            throw new NotFoundException("Invalid token");
+        }
         GenericProductDto genericProductDto= productService.getProductById(id);
         if(genericProductDto==null){
             throw new NotFoundException("Product with uuid: "+id+ " not found.");
-//            return new GenericProductDto();
         }
         /*******************************************************************************************
          The below code is to mock an error in the controller and to test the test method in test class.
